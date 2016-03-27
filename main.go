@@ -2,8 +2,12 @@ package main
 
 import (
 	"fmt"
+
+	"github.com/inkstainblue/dungeon-plotter/canvas"
 )
 
 func main() {
-	fmt.Println("Hello World!")
+	c := canvas.ScreenCanvas{}
+
+	fmt.Printf("%T\n", c)
 }
