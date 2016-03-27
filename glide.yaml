@@ -1,0 +1,5 @@
+package: github.com/inkstainblue/dungeon-plotter
+import:
+- package: github.com/veandco/go-sdl2
+  subpackages:
+  - sdl

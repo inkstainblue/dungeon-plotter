@@ -7,7 +7,11 @@ import (
 )
 
 func main() {
-	c := canvas.ScreenCanvas{}
+	sc := canvas.NewScreenCanvas()
 
-	fmt.Printf("%T\n", c)
+	fmt.Printf("%T is ready\n", sc)
+
+	sc.WaitForQuit()
+
+	fmt.Printf("%T is done\n", sc)
 }
