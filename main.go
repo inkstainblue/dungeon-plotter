@@ -17,8 +17,8 @@ func main() {
 
 	fmt.Printf("%T is ready\n", sc)
 
-	sc.Draw(image.Pt(0, 0), image.Pt(100, 100))
-	sc.Draw(image.Pt(200, 100), image.Pt(700, 100))
+	sc.Draw(image.Pt(0, 0), image.Pt(10, 10))
+	sc.Draw(image.Pt(20, 10), image.Pt(70, 10))
 
 	sc.WaitForQuit()
 

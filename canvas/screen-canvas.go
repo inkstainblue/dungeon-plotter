@@ -1,6 +1,7 @@
 package canvas
 
 import (
+	"errors"
 	"fmt"
 	"image"
 	"sync"
@@ -43,7 +44,10 @@ func NewScreenCanvas(gridWidth, gridHeight int) (sc ScreenCanvas) {
 		panic(err)
 	}
 
-	sc.Clear(image.Rect(0, 0, w, h))
+	if err = sc.Clear(image.Rect(0, 0, gridWidth, gridHeight)); err != nil {
+		// FIXME: Handle errors properly.
+		panic(err)
+	}
 
 	sc.eventLoop = new(sync.WaitGroup)
 	sc.eventLoop.Add(1)
@@ -72,20 +76,67 @@ func (sc *ScreenCanvas) WaitForQuit() {
 	sc.eventLoop.Wait()
 }
 
+// Clear overwrites the entire ScreenCanvas with a white background.
+// The rectangle to clear is ignored, but an error is returned if the rectangle
+// is larger than the drawable area.
 func (sc *ScreenCanvas) Clear(rect image.Rectangle) error {
-	sc.renderer.SetDrawColor(255, 255, 255, 255)
-	sc.renderer.Clear()
+	if err := sc.renderer.SetDrawColor(255, 255, 255, 255); err != nil {
+		return err
+	}
+
+	if err := sc.renderer.Clear(); err != nil {
+		return err
+	}
+
+	sc.renderer.Present()
+
+	r := sc.gridRectToScreen(rect)
+	w, h, err := sc.renderer.GetRendererOutputSize()
+
+	switch {
+	case err != nil:
+		return err
+	case int(r.W) > w || int(r.H) > h:
+		return errors.New("The rectangle to clear is larger than the drawable area")
+	}
+
+	return nil
+}
+
+// Draw draws a line between two points in grid space on the ScreenCanvas.
+// The points are converted from grid space to screen space.
+// FIXME: This needs to handle float inputs for drawing sub grid shapes.
+func (sc *ScreenCanvas) Draw(a, b image.Point) error {
+	points := []sdl.Point{
+		sc.gridPointToScreen(a),
+		sc.gridPointToScreen(b),
+	}
+
+	if err := sc.renderer.SetDrawColor(0, 0, 0, 255); err != nil {
+		return err
+	}
+
+	if err := sc.renderer.DrawLines(points); err != nil {
+		return err
+	}
+
 	sc.renderer.Present()
 
 	return nil
 }
 
-// TODO: Use screen space coordinates ( [0, 1] -> [0, width or height] ).
-//       Or grid space coordinates ( [0, grid width] -> [0, canvas width] ).
-func (sc *ScreenCanvas) Draw(a, b image.Point) error {
-	sc.renderer.SetDrawColor(0, 0, 0, 255)
-	sc.renderer.DrawLine(a.X, a.Y, b.X, b.Y)
-	sc.renderer.Present()
+func (sc *ScreenCanvas) gridPointToScreen(p image.Point) sdl.Point {
+	return sdl.Point{
+		X: int32(p.X * sc.gridScale),
+		Y: int32(p.Y * sc.gridScale),
+	}
+}
 
-	return nil
+func (sc *ScreenCanvas) gridRectToScreen(r image.Rectangle) sdl.Rect {
+	return sdl.Rect{
+		X: int32(r.Min.X * sc.gridScale),
+		Y: int32(r.Min.Y * sc.gridScale),
+		W: int32(r.Dx() * sc.gridScale),
+		H: int32(r.Dy() * sc.gridScale),
+	}
 }
