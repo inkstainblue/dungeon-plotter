@@ -72,10 +72,6 @@ func NewScreenCanvas(gridWidth, gridHeight int) (sc ScreenCanvas) {
 	return
 }
 
-func (sc *ScreenCanvas) WaitForQuit() {
-	sc.eventLoop.Wait()
-}
-
 // Clear overwrites the entire ScreenCanvas with a white background.
 // The rectangle to clear is ignored, but an error is returned if the rectangle
 // is larger than the drawable area.
@@ -123,6 +119,10 @@ func (sc *ScreenCanvas) Draw(a, b image.Point) error {
 	sc.renderer.Present()
 
 	return nil
+}
+
+func (sc *ScreenCanvas) WaitForQuit() {
+	sc.eventLoop.Wait()
 }
 
 func (sc *ScreenCanvas) gridPointToScreen(p image.Point) sdl.Point {
