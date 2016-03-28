@@ -12,7 +12,7 @@ type (
 	}
 )
 
-// New creates a new Controller using the given canvas.Canvas.
+// New creates a new controller using the given canvas.
 func New(canvas canvas.Canvas) (c Controller) {
 	c.canvas = canvas
 
@@ -25,7 +25,7 @@ func (c *Controller) DrawWall(a, b image.Point) error {
 	return c.canvas.Draw(a, b)
 }
 
-// WaitForQuit blocks until the Controller has exited.
+// WaitForQuit blocks until the controller has exited.
 func (c *Controller) WaitForQuit() {
 	c.canvas.WaitForQuit()
 }

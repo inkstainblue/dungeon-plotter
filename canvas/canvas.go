@@ -6,16 +6,16 @@ import (
 
 type (
 	Canvas interface {
-		// Clear ensures a given rectangle on the Canvas is empty,
+		// Clear ensures a given rectangle on the canvas is empty,
 		// ready for drawing to.
 		Clear(rect image.Rectangle) error
 
-		// Draw draws a line between two points on the Canvas.
+		// Draw draws a line between two points on the canvas.
 		// The points should be provided in grid space.
 		// FIXME: This needs to handle float inputs for drawing sub grid shapes.
 		Draw(a, b image.Point) error
 
-		// WaitForQuit blocks until the Canvas has exited.
+		// WaitForQuit blocks until the canvas has exited.
 		WaitForQuit()
 	}
 )

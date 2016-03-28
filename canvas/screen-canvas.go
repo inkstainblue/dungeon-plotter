@@ -21,6 +21,7 @@ type (
 	}
 )
 
+// NewScreenCanvas creates a new ScreenCanvas.
 func NewScreenCanvas(gridWidth, gridHeight int) (sc ScreenCanvas) {
 	sc.gridScale = 10
 
@@ -72,7 +73,7 @@ func NewScreenCanvas(gridWidth, gridHeight int) (sc ScreenCanvas) {
 	return
 }
 
-// Clear overwrites the entire ScreenCanvas with a white background.
+// Clear overwrites the entire canvas with a white background.
 // The rectangle to clear is ignored, but an error is returned if the rectangle
 // is larger than the drawable area.
 func (sc *ScreenCanvas) Clear(rect image.Rectangle) error {
@@ -99,8 +100,8 @@ func (sc *ScreenCanvas) Clear(rect image.Rectangle) error {
 	return nil
 }
 
-// Draw draws a line between two points in grid space on the ScreenCanvas.
-// The points are converted from grid space to screen space.
+// Draw draws a line between two points in grid space on the canvas.
+// The points are converted from grid space to canvas space.
 // FIXME: This needs to handle float inputs for drawing sub grid shapes.
 func (sc *ScreenCanvas) Draw(a, b image.Point) error {
 	points := []sdl.Point{
