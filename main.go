@@ -15,12 +15,15 @@ const (
 )
 
 func main() {
+	sc := canvas.NewScreenCanvas(maxGridWidth, maxGridHeight)
+
+	fmt.Printf("%T is ready\n", sc)
+
 	k := input.NewKeyboard()
 
 	fmt.Printf("%T is ready\n", k)
 
-	sc := canvas.NewScreenCanvas(maxGridWidth, maxGridHeight)
-	c := controller.New(&sc)
+	c := controller.New([]canvas.Canvas{&sc}, []input.InputHandler{&k})
 
 	fmt.Printf("%T is ready\n", c)
 

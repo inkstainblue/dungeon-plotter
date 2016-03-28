@@ -1,21 +1,27 @@
 package controller
 
 import (
+	"fmt"
 	"image"
 	"sync"
 
 	"github.com/inkstainblue/dungeon-plotter/canvas"
+	"github.com/inkstainblue/dungeon-plotter/input"
 )
 
 type (
 	Controller struct {
 		canvases []canvas.Canvas
+		inputs   []input.InputHandler
 	}
 )
 
 // New creates a new controller using the given canvases for output.
-func New(canvases ...canvas.Canvas) (c Controller) {
+func New(canvases []canvas.Canvas, inputs []input.InputHandler) (c Controller) {
 	c.canvases = canvases
+	c.inputs = inputs
+
+	c.handleInput()
 
 	return
 }
@@ -45,4 +51,16 @@ func (c *Controller) WaitForQuit() {
 	}
 
 	wg.Wait()
+}
+
+func (c *Controller) handleInput() {
+	for _, in := range c.inputs {
+		go func() {
+			for {
+				code := in.WaitForInput()
+
+				fmt.Println(code)
+			}
+		}()
+	}
 }

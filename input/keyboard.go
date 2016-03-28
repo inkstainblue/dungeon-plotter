@@ -1,8 +1,6 @@
 package input
 
 import (
-	"fmt"
-
 	"gopkg.in/xkg.v0"
 )
 
@@ -17,15 +15,9 @@ func NewKeyboard() (k Keyboard) {
 
 	go xkg.StartXGrabber(k.keys)
 
-	go func() {
-		for {
-			keycode := <-k.keys
-
-			if key, ok := xkg.KeyMap[keycode]; ok {
-				fmt.Printf("[%s]\n", key)
-			}
-		}
-	}()
-
 	return
+}
+
+func (k *Keyboard) WaitForInput() (code int) {
+	return <-k.keys
 }
