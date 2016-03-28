@@ -5,6 +5,7 @@ import (
 	"image"
 
 	"github.com/inkstainblue/dungeon-plotter/canvas"
+	"github.com/inkstainblue/dungeon-plotter/controller"
 )
 
 const (
@@ -14,13 +15,14 @@ const (
 
 func main() {
 	sc := canvas.NewScreenCanvas(maxGridWidth, maxGridHeight)
+	c := controller.New(&sc)
 
 	fmt.Printf("%T is ready\n", sc)
 
-	sc.Draw(image.Pt(0, 0), image.Pt(10, 10))
-	sc.Draw(image.Pt(20, 10), image.Pt(70, 10))
+	c.DrawWall(image.Pt(0, 0), image.Pt(10, 10))
+	c.DrawWall(image.Pt(20, 10), image.Pt(70, 10))
 
-	sc.WaitForQuit()
+	c.WaitForQuit()
 
 	fmt.Printf("%T is done\n", sc)
 }
