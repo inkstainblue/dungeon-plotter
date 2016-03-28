@@ -21,7 +21,7 @@ type (
 func NewScreenCanvas() (sc ScreenCanvas) {
 	var err error
 
-	if err = sdl.Init(sdl.INIT_EVERYTHING); err != nil {
+	if err = sdl.Init(sdl.INIT_VIDEO); err != nil {
 		// FIXME: Handle errors properly.
 		panic(err)
 	}
