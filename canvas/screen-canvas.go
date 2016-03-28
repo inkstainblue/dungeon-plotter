@@ -67,11 +67,19 @@ func (sc *ScreenCanvas) WaitForQuit() {
 }
 
 func (sc *ScreenCanvas) Clear(rect image.Rectangle) error {
+	sc.renderer.SetDrawColor(255, 255, 255, 255)
 	sc.renderer.Clear()
+	sc.renderer.Present()
 
 	return nil
 }
 
+// TODO: Use screen space coordinates ( [0, 1] -> [0, width or height] ).
+//       Or grid space coordinates ( [0, grid width] -> [0, canvas width] ).
 func (sc *ScreenCanvas) Draw(a, b image.Point) error {
+	sc.renderer.SetDrawColor(0, 0, 0, 255)
+	sc.renderer.DrawLine(a.X, a.Y, b.X, b.Y)
+	sc.renderer.Present()
+
 	return nil
 }

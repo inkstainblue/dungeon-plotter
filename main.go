@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"image"
 
 	"github.com/inkstainblue/dungeon-plotter/canvas"
 )
@@ -10,6 +11,8 @@ func main() {
 	sc := canvas.NewScreenCanvas()
 
 	fmt.Printf("%T is ready\n", sc)
+
+	sc.Draw(image.Pt(0, 0), image.Pt(80, 100))
 
 	sc.WaitForQuit()
 
