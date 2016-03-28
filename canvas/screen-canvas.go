@@ -12,9 +12,9 @@ type (
 	ScreenCanvas struct {
 		Canvas
 
+		eventLoop *sync.WaitGroup
 		window    *sdl.Window
 		renderer  *sdl.Renderer
-		eventLoop *sync.WaitGroup
 	}
 )
 
@@ -45,9 +45,11 @@ func NewScreenCanvas() (sc ScreenCanvas) {
 	sc.eventLoop.Add(1)
 
 	go func() {
-		defer sc.eventLoop.Done()
-		defer sc.window.Destroy()
-		defer sc.renderer.Destroy()
+		defer func() {
+			sc.renderer.Destroy()
+			sc.window.Destroy()
+			sc.eventLoop.Done()
+		}()
 
 		for {
 			switch e := sdl.WaitEvent().(type) {
