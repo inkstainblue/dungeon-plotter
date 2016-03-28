@@ -12,13 +12,17 @@ type (
 	ScreenCanvas struct {
 		Canvas
 
+		gridScale int
+
 		eventLoop *sync.WaitGroup
 		window    *sdl.Window
 		renderer  *sdl.Renderer
 	}
 )
 
-func NewScreenCanvas() (sc ScreenCanvas) {
+func NewScreenCanvas(gridWidth, gridHeight int) (sc ScreenCanvas) {
+	sc.gridScale = 10
+
 	var err error
 
 	if err = sdl.Init(sdl.INIT_VIDEO); err != nil {
@@ -27,7 +31,7 @@ func NewScreenCanvas() (sc ScreenCanvas) {
 	}
 
 	title := "Dungeon Plotter"
-	x, y, w, h := sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED, 800, 600
+	x, y, w, h := sdl.WINDOWPOS_UNDEFINED, sdl.WINDOWPOS_UNDEFINED, gridWidth*sc.gridScale, gridHeight*sc.gridScale
 
 	if sc.window, err = sdl.CreateWindow(title, x, y, w, h, sdl.WINDOW_SHOWN); err != nil {
 		// FIXME: Handle errors properly.
@@ -41,7 +45,7 @@ func NewScreenCanvas() (sc ScreenCanvas) {
 
 	sc.Clear(image.Rect(0, 0, w, h))
 
-	sc.eventLoop = &sync.WaitGroup{}
+	sc.eventLoop = new(sync.WaitGroup)
 	sc.eventLoop.Add(1)
 
 	go func() {
