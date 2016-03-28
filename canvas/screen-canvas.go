@@ -2,7 +2,6 @@ package canvas
 
 import (
 	"errors"
-	"fmt"
 	"image"
 	"sync"
 
@@ -61,11 +60,10 @@ func NewScreenCanvas(gridWidth, gridHeight int) (sc ScreenCanvas) {
 		}()
 
 		for {
-			switch e := sdl.WaitEvent().(type) {
+			// TODO: Filter out all other events.
+			switch sdl.WaitEvent().(type) {
 			case *sdl.QuitEvent:
 				return
-			default:
-				fmt.Printf("%T: %+v\n", e, e)
 			}
 		}
 	}()

@@ -3,3 +3,4 @@ import:
 - package: github.com/veandco/go-sdl2
   subpackages:
   - sdl
+- package: gopkg.in/xkg.v0

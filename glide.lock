@@ -1,8 +1,10 @@
-hash: a7c1d4cd91d069202717628f6608d46b4e800ae9efcdf22019132696edb60376
-updated: 2016-03-27T17:19:41.171083507+01:00
+hash: 923bb95be16c532677eaed2c19bc57e053803fe20c1cd0857222c5c651d68b92
+updated: 2016-03-28T23:08:49.570870825+01:00
 imports:
 - name: github.com/veandco/go-sdl2
   version: 458b8af7192ec17b8eafd6e67f949ace867daed9
   subpackages:
   - sdl
+- name: gopkg.in/xkg.v0
+  version: d4297b68f2f0d74453e552c58ab7417cd39def69
 devImports: []

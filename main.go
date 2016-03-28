@@ -6,6 +6,7 @@ import (
 
 	"github.com/inkstainblue/dungeon-plotter/canvas"
 	"github.com/inkstainblue/dungeon-plotter/controller"
+	"github.com/inkstainblue/dungeon-plotter/input"
 )
 
 const (
@@ -14,6 +15,10 @@ const (
 )
 
 func main() {
+	k := input.NewKeyboard()
+
+	fmt.Printf("%T is ready\n", k)
+
 	sc := canvas.NewScreenCanvas(maxGridWidth, maxGridHeight)
 	c := controller.New(&sc)
 
