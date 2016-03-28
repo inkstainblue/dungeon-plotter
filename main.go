@@ -17,12 +17,12 @@ func main() {
 	sc := canvas.NewScreenCanvas(maxGridWidth, maxGridHeight)
 	c := controller.New(&sc)
 
-	fmt.Printf("%T is ready\n", sc)
+	fmt.Printf("%T is ready\n", c)
 
 	c.DrawWall(image.Pt(0, 0), image.Pt(10, 10))
 	c.DrawWall(image.Pt(20, 10), image.Pt(70, 10))
 
 	c.WaitForQuit()
 
-	fmt.Printf("%T is done\n", sc)
+	fmt.Printf("%T is done\n", c)
 }

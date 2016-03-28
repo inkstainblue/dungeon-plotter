@@ -2,30 +2,47 @@ package controller
 
 import (
 	"image"
+	"sync"
 
 	"github.com/inkstainblue/dungeon-plotter/canvas"
 )
 
 type (
 	Controller struct {
-		canvas canvas.Canvas
+		canvases []canvas.Canvas
 	}
 )
 
-// New creates a new controller using the given canvas.
-func New(canvas canvas.Canvas) (c Controller) {
-	c.canvas = canvas
+// New creates a new controller using the given canvases for output.
+func New(canvases ...canvas.Canvas) (c Controller) {
+	c.canvases = canvases
 
 	return
 }
 
 // DrawWall draws a wall between two points in grid space.
 func (c *Controller) DrawWall(a, b image.Point) error {
-	// TODO: Draw more interesting lines.
-	return c.canvas.Draw(a, b)
+	for _, cv := range c.canvases {
+		// TODO: Draw more interesting lines.
+		if err := cv.Draw(a, b); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 // WaitForQuit blocks until the controller has exited.
 func (c *Controller) WaitForQuit() {
-	c.canvas.WaitForQuit()
+	wg := new(sync.WaitGroup)
+	wg.Add(len(c.canvases))
+
+	for _, cv := range c.canvases {
+		go func() {
+			cv.WaitForQuit()
+			wg.Done()
+		}()
+	}
+
+	wg.Wait()
 }
