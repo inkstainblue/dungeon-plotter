@@ -18,6 +18,9 @@ func NewKeyboard() (k Keyboard) {
 	return
 }
 
-func (k *Keyboard) WaitForInput() (code int) {
-	return <-k.keys
+func (k *Keyboard) WaitForInput() (code int, label string) {
+	code = <-k.keys
+	label = xkg.KeyMap[code]
+
+	return
 }

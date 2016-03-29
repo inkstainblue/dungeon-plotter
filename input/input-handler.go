@@ -2,6 +2,6 @@ package input
 
 type (
 	InputHandler interface {
-		WaitForInput() int
+		WaitForInput() (code int, label string)
 	}
 )

@@ -57,9 +57,9 @@ func (c *Controller) handleInput() {
 	for _, in := range c.inputs {
 		go func() {
 			for {
-				code := in.WaitForInput()
+				code, label := in.WaitForInput()
 
-				fmt.Println(code)
+				fmt.Println(label, code)
 			}
 		}()
 	}
