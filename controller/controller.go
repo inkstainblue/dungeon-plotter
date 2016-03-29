@@ -25,6 +25,39 @@ func New(canvases []canvas.Canvas, inputs []input.InputHandler) (c Controller) {
 	return
 }
 
+// DrawPath draws a path between two points in grid space.
+// FIXME: Draw in the correct direction.
+// FIXME: Draw along the vector joining the two points.
+func (c *Controller) DrawPath(a, b canvas.Point) error {
+	half := canvas.Pt(0.5, 0.5)
+
+	a, b = a.Add(half), b.Add(half)
+
+	p0 := a
+	p1 := a.Add(canvas.Pt(0.25, 0))
+
+	for {
+		for _, cv := range c.canvases {
+			if err := cv.Draw(p0, p1); err != nil {
+				return err
+			}
+		}
+
+		p0 = p1.Add(canvas.Pt(0.5, 0))
+		p1 = p0.Add(canvas.Pt(0.5, 0))
+
+		if p0.X >= b.X {
+			break
+		}
+
+		if p1.X > b.X {
+			p1 = b
+		}
+	}
+
+	return nil
+}
+
 // DrawWall draws a wall between two points in grid space.
 func (c *Controller) DrawWall(a, b canvas.Point) error {
 	half := canvas.Pt(0.5, 0.5)
