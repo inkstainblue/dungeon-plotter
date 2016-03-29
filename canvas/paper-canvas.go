@@ -21,7 +21,7 @@ func (sc *PaperCanvas) Clear(rect image.Rectangle) error {
 }
 
 // TODO: Implement me!
-func (sc *PaperCanvas) Draw(a, b image.Point) error {
+func (sc *PaperCanvas) Draw(a, b Point) error {
 	return nil
 }
 

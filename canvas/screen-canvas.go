@@ -85,7 +85,7 @@ func (sc *ScreenCanvas) Clear(rect image.Rectangle) error {
 
 	sc.renderer.Present()
 
-	r := sc.gridRectToScreen(rect)
+	r := sc.gridRectToCanvas(rect)
 	w, h, err := sc.renderer.GetRendererOutputSize()
 
 	switch {
@@ -100,11 +100,10 @@ func (sc *ScreenCanvas) Clear(rect image.Rectangle) error {
 
 // Draw draws a line between two points in grid space on the canvas.
 // The points are converted from grid space to canvas space.
-// FIXME: This needs to handle float inputs for drawing sub grid shapes.
-func (sc *ScreenCanvas) Draw(a, b image.Point) error {
+func (sc *ScreenCanvas) Draw(a, b Point) error {
 	points := []sdl.Point{
-		sc.gridPointToScreen(a),
-		sc.gridPointToScreen(b),
+		sc.gridPointToCanvas(a),
+		sc.gridPointToCanvas(b),
 	}
 
 	if err := sc.renderer.SetDrawColor(0, 0, 0, 255); err != nil {
@@ -124,14 +123,14 @@ func (sc *ScreenCanvas) WaitForQuit() {
 	sc.eventLoop.Wait()
 }
 
-func (sc *ScreenCanvas) gridPointToScreen(p image.Point) sdl.Point {
+func (sc *ScreenCanvas) gridPointToCanvas(p Point) sdl.Point {
 	return sdl.Point{
-		X: int32(p.X * sc.gridScale),
-		Y: int32(p.Y * sc.gridScale),
+		X: int32(p.X * float64(sc.gridScale)),
+		Y: int32(p.Y * float64(sc.gridScale)),
 	}
 }
 
-func (sc *ScreenCanvas) gridRectToScreen(r image.Rectangle) sdl.Rect {
+func (sc *ScreenCanvas) gridRectToCanvas(r image.Rectangle) sdl.Rect {
 	return sdl.Rect{
 		X: int32(r.Min.X * sc.gridScale),
 		Y: int32(r.Min.Y * sc.gridScale),

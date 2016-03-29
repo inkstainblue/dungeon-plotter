@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"image"
 
 	"github.com/inkstainblue/dungeon-plotter/canvas"
 	"github.com/inkstainblue/dungeon-plotter/controller"
@@ -27,8 +26,8 @@ func main() {
 
 	fmt.Printf("%T is ready\n", c)
 
-	c.DrawWall(image.Pt(0, 0), image.Pt(10, 10))
-	c.DrawWall(image.Pt(20, 10), image.Pt(70, 10))
+	c.DrawWall(canvas.Pt(0, 0), canvas.Pt(10, 10))
+	c.DrawWall(canvas.Pt(20, 10), canvas.Pt(70, 10))
 
 	c.WaitForQuit()
 

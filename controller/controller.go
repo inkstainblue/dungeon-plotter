@@ -2,7 +2,6 @@ package controller
 
 import (
 	"fmt"
-	"image"
 	"sync"
 
 	"github.com/inkstainblue/dungeon-plotter/canvas"
@@ -27,10 +26,12 @@ func New(canvases []canvas.Canvas, inputs []input.InputHandler) (c Controller) {
 }
 
 // DrawWall draws a wall between two points in grid space.
-func (c *Controller) DrawWall(a, b image.Point) error {
+func (c *Controller) DrawWall(a, b canvas.Point) error {
+	half := canvas.Pt(0.5, 0.5)
+
 	for _, cv := range c.canvases {
 		// TODO: Draw more interesting lines.
-		if err := cv.Draw(a, b); err != nil {
+		if err := cv.Draw(a.Add(half), b.Add(half)); err != nil {
 			return err
 		}
 	}
