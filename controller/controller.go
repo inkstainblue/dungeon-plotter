@@ -37,10 +37,8 @@ func (c *Controller) DrawPath(a, b canvas.Point) error {
 	p1 := a.Add(canvas.Pt(0.25, 0))
 
 	for {
-		for _, cv := range c.canvases {
-			if err := cv.Draw(p0, p1); err != nil {
-				return err
-			}
+		if err := c.draw(p0, p1); err != nil {
+			return err
 		}
 
 		p0 = p1.Add(canvas.Pt(0.5, 0))
@@ -62,14 +60,8 @@ func (c *Controller) DrawPath(a, b canvas.Point) error {
 func (c *Controller) DrawWall(a, b canvas.Point) error {
 	half := canvas.Pt(0.5, 0.5)
 
-	for _, cv := range c.canvases {
-		// TODO: Draw more interesting lines.
-		if err := cv.Draw(a.Add(half), b.Add(half)); err != nil {
-			return err
-		}
-	}
-
-	return nil
+	// TODO: Draw more interesting lines.
+	return c.draw(a.Add(half), b.Add(half))
 }
 
 // WaitForQuit blocks until the controller has exited.
@@ -85,6 +77,16 @@ func (c *Controller) WaitForQuit() {
 	}
 
 	wg.Wait()
+}
+
+func (c *Controller) draw(a, b canvas.Point) error {
+	for _, cv := range c.canvases {
+		if err := cv.Draw(a, b); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 func (c *Controller) handleInput() {
