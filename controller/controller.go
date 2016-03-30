@@ -44,7 +44,7 @@ func (c *Controller) DrawPath(a, b canvas.Point) error {
 		p0 = p1.Add(canvas.Pt(0.5, 0))
 		p1 = p0.Add(canvas.Pt(0.5, 0))
 
-		if p0.X >= b.X {
+		if p0.X > b.X {
 			break
 		}
 

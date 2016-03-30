@@ -111,8 +111,15 @@ func (sc *ScreenCanvas) Draw(a, b Point) error {
 		return err
 	}
 
-	if err := sc.renderer.DrawLines(points); err != nil {
-		return err
+	switch {
+	case points[0].X == points[1].X && points[0].Y == points[1].Y:
+		if err := sc.renderer.DrawPoints(points[:1]); err != nil {
+			return err
+		}
+	default:
+		if err := sc.renderer.DrawLines(points); err != nil {
+			return err
+		}
 	}
 
 	sc.renderer.Present()

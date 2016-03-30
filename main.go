@@ -36,6 +36,12 @@ func main() {
 
 	c.DrawPath(canvas.Pt(40, 30), canvas.Pt(70, 50))
 
+	c.DrawPath(canvas.Pt(20, 50), canvas.Pt(25, 80))
+
+	c.DrawPath(canvas.Pt(50, 50), canvas.Pt(50, 50))
+
+	fmt.Println("Waiting for quit")
+
 	c.WaitForQuit()
 
 	fmt.Printf("%T is done\n", c)
