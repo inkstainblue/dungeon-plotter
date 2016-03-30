@@ -5,6 +5,7 @@ import (
 	"image"
 	"sync"
 
+	"github.com/inkstainblue/dungeon-plotter/util"
 	"github.com/veandco/go-sdl2/sdl"
 )
 
@@ -125,8 +126,8 @@ func (sc *ScreenCanvas) WaitForQuit() {
 
 func (sc *ScreenCanvas) gridPointToCanvas(p Point) sdl.Point {
 	return sdl.Point{
-		X: int32(p.X * float64(sc.gridScale)),
-		Y: int32(p.Y * float64(sc.gridScale)),
+		X: int32(util.Round(p.X * float64(sc.gridScale))),
+		Y: int32(util.Round(p.Y * float64(sc.gridScale))),
 	}
 }
 
