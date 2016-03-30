@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"math"
 	"sync"
 
@@ -13,6 +12,8 @@ type (
 	Controller struct {
 		canvases []canvas.Canvas
 		inputs   []input.InputHandler
+
+		inputBindings map[int][]func()
 	}
 )
 
@@ -21,9 +22,16 @@ func New(canvases []canvas.Canvas, inputs []input.InputHandler) (c Controller) {
 	c.canvases = canvases
 	c.inputs = inputs
 
+	c.inputBindings = make(map[int][]func())
+
 	c.handleInput()
 
 	return
+}
+
+// BindInput binds a callback to a key code.
+func (c *Controller) BindInput(code int, cb func()) {
+	c.inputBindings[code] = append(c.inputBindings[code], cb)
 }
 
 // DrawPath draws a path between two points in grid space.
@@ -126,9 +134,13 @@ func (c *Controller) handleInput() {
 	for _, in := range c.inputs {
 		go func() {
 			for {
-				code, label := in.WaitForInput()
+				code, _ := in.WaitForInput()
 
-				fmt.Println(label, code)
+				if callbacks := c.inputBindings[code]; len(callbacks) > 0 {
+					for _, cb := range callbacks {
+						cb()
+					}
+				}
 			}
 		}()
 	}
