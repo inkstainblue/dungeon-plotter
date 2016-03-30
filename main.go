@@ -26,19 +26,22 @@ func main() {
 
 	fmt.Printf("%T is ready\n", c)
 
-	c.DrawWall(canvas.Pt(0, 0), canvas.Pt(10, 10))
-
-	c.DrawPath(canvas.Pt(20, 10), canvas.Pt(70, 10))
-
-	c.DrawPath(canvas.Pt(20, 20), canvas.Pt(30, 20))
-	c.DrawPath(canvas.Pt(30, 20), canvas.Pt(35, 20))
-	c.DrawPath(canvas.Pt(35, 20), canvas.Pt(70, 20))
-
-	c.DrawPath(canvas.Pt(40, 30), canvas.Pt(70, 50))
-
-	c.DrawPath(canvas.Pt(20, 50), canvas.Pt(25, 80))
+	c.DrawWall(canvas.Pt(0, 0), canvas.Pt(0, 99))
+	c.DrawWall(canvas.Pt(0, 0), canvas.Pt(99, 0))
+	c.DrawWall(canvas.Pt(99, 0), canvas.Pt(99, 99))
+	c.DrawWall(canvas.Pt(0, 99), canvas.Pt(99, 99))
 
 	c.DrawPath(canvas.Pt(50, 50), canvas.Pt(50, 50))
+
+	c.DrawPath(canvas.Pt(25, 25), canvas.Pt(75, 25))
+	c.DrawPath(canvas.Pt(75, 25), canvas.Pt(75, 75))
+	c.DrawPath(canvas.Pt(75, 75), canvas.Pt(25, 75))
+	c.DrawPath(canvas.Pt(25, 75), canvas.Pt(25, 25))
+
+	c.DrawPath(canvas.Pt(50, 25), canvas.Pt(75, 50))
+	c.DrawPath(canvas.Pt(75, 50), canvas.Pt(50, 75))
+	c.DrawPath(canvas.Pt(50, 75), canvas.Pt(25, 50))
+	c.DrawPath(canvas.Pt(25, 50), canvas.Pt(50, 25))
 
 	fmt.Println("Waiting for quit")
 
