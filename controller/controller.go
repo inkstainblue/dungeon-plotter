@@ -28,9 +28,9 @@ func New(canvases []canvas.Canvas, inputs []input.InputHandler) (c Controller) {
 
 // DrawPath draws a path between two points in grid space.
 func (c *Controller) DrawPath(a, b canvas.Point) error {
-	a, b = centerPoint(a), centerPoint(b)
-
-	return c.drawDashed(a, b, 0.5, 0.5)
+	// TODO: Stop repeated paths from overlapping with each other?
+	//		 Maybe use a different offset based on the draw direction.
+	return c.drawDashed(centerPoint(a), centerPoint(b), 0.5, 0.5)
 }
 
 // DrawWall draws a wall between two points in grid space.
