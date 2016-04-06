@@ -48,10 +48,10 @@ func (d *Dungeoneer) Start() {
 	// Mark the starting position.
 	d.ctrl.DrawPath(d.pos, d.pos)
 
-	d.ctrl.BindInput(111, d.moveUp)    // Up
-	d.ctrl.BindInput(116, d.moveDown)  // Down
-	d.ctrl.BindInput(113, d.moveLeft)  // Left
-	d.ctrl.BindInput(114, d.moveRight) // Right
+	d.ctrl.BindInput(input.Up, d.moveUp)
+	d.ctrl.BindInput(input.Down, d.moveDown)
+	d.ctrl.BindInput(input.Left, d.moveLeft)
+	d.ctrl.BindInput(input.Right, d.moveRight)
 }
 
 // WaitForQuit blocks until the dungeoneer has exited.
