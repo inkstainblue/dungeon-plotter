@@ -30,7 +30,7 @@ func New(opts DungeoneerOptions) (d Dungeoneer) {
 	sc := canvas.NewScreenCanvas(maxGridWidth, maxGridHeight)
 	k := input.NewKeyboard()
 
-	d.ctrl = controller.New([]canvas.Canvas{&sc}, []input.InputHandler{&k})
+	d.ctrl = controller.New([]canvas.Canvas{&sc}, []input.InputManager{&k})
 
 	d.pos = canvas.Pt(50, 50)
 

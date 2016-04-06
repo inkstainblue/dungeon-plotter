@@ -11,14 +11,14 @@ import (
 type (
 	Controller struct {
 		canvases []canvas.Canvas
-		inputs   []input.InputHandler
+		inputs   []input.InputManager
 
 		inputBindings map[int][]func()
 	}
 )
 
 // New creates a new controller using the given canvases for output.
-func New(canvases []canvas.Canvas, inputs []input.InputHandler) (c Controller) {
+func New(canvases []canvas.Canvas, inputs []input.InputManager) (c Controller) {
 	c.canvases = canvases
 	c.inputs = inputs
 
